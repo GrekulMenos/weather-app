@@ -28,7 +28,7 @@ const Forecast = ({ data, setForecast }: foreCastDataProps): JSX.Element => {
   const today = data.list[0];
 
   return (
-    <div className="w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-auto bg-white bg-opacity-20 backdrop-blur-ls rounded drop-shadow-lg">
+    <div className="w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-auto bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
       <button
         onClick={() => setForecast(null)}
         className=" w-full flex justify-center"

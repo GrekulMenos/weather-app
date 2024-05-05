@@ -24,7 +24,6 @@ const useForecast = () => {
     }
 
     getSearchOptions(value);
-    console.log(options);
   };
 
   const getForecast = (option: optionType) => {
