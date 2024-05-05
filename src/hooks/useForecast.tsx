@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { optionType } from "../types";
+import { foreCastProps, optionType } from "../types";
 
 const useForecast = () => {
   const [input, setInput] = useState<string>("");
   const [city, setCity] = useState<optionType | null>(null);
   const [options, setOptions] = useState<[]>([]);
-  const [forecast, setForecast] = useState<null>(null);
+  const [forecast, setForecast] = useState<foreCastProps | null>(null);
 
   const getSearchOptions = (value: string) => {
     fetch(
@@ -29,16 +29,23 @@ const useForecast = () => {
 
   const getForecast = (option: optionType) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${option.lat}&lon=${option.lon}&units=metric&appid=6e350a23bfb9c1c35cf6005ee0ee03b6`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${option.lat}&lon=${option.lon}&units=metric&appid=6e350a23bfb9c1c35cf6005ee0ee03b6`
     )
       .then((res) => res.json())
-      .then((data) => setForecast(data));
+      .then((data) => {
+        const forecastData = {
+          ...data.city,
+          list: data.list.slice(0, 16),
+        };
+        setForecast(forecastData);
+      });
   };
 
   const onSubmit = () => {
     if (!city) return;
 
     getForecast(city);
+    setInput("");
   };
 
   const onOptionSelect = (option: optionType) => {
@@ -58,6 +65,7 @@ const useForecast = () => {
     onSubmit,
     onInputChange,
     onOptionSelect,
+    setForecast,
   };
 };
 
